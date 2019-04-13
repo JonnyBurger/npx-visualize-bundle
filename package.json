@@ -1,0 +1,23 @@
+{
+  "name": "visualize-bundle",
+  "version": "1.0.0",
+  "description": "Visualize React Native bundle",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && node dist && npx source-map-explorer bundle.js bundle.js.map"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "got": "^9.6.0",
+    "ora": "^3.4.0",
+    "qs": "^6.7.0",
+    "source-map-explorer": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/got": "^9.4.1",
+    "@types/qs": "^6.5.3",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.3"
+  }
+}
