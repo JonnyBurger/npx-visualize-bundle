@@ -16,7 +16,6 @@ const choices = [
 ];
 
 const start = async () => {
-	const startTime = Date.now();
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
 		isRnRunning()
@@ -41,6 +40,8 @@ const start = async () => {
 		);
 		process.exit(1);
 	}
+	const startTime = Date.now();
+
 	const spinner = ora();
 	spinner.start();
 	spinner.text = `Getting bundle from port ${port}...`;
@@ -52,7 +53,7 @@ const start = async () => {
 					: 'http://localhost:8081/index.ios.bundle'
 			}?${bundleQuery}`
 		);
-		spinner.text = 'Getting map from port 19001...';
+		spinner.text = `Getting map from port ${port}...`;
 		const sourceMap = await got(
 			`${
 				port === 19001

@@ -17,6 +17,7 @@
     "source-map-explorer": "^1.8.0"
   },
   "devDependencies": {
+    "@react-native-community/bob": "^0.3.4",
     "@types/got": "^9.4.1",
     "@types/inquirer": "^6.0.0",
     "@types/open": "^6.1.0",
