@@ -31,7 +31,6 @@
   "module": "dist/module/index.js",
   "types": "dist/typescript/src/index.d.ts",
   "files": [
-    "src",
     "dist"
   ],
   "@react-native-community/bob": {

@@ -16,6 +16,7 @@ const choices = [
 ];
 
 const start = async () => {
+	console.log('');
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
 		isRnRunning()
@@ -45,6 +46,7 @@ const start = async () => {
 	const spinner = ora();
 	spinner.start();
 	spinner.text = `Getting bundle from port ${port}...`;
+	await new Promise(resolve => setTimeout(resolve, 100));
 	try {
 		const bundle = await got(
 			`${
@@ -54,6 +56,8 @@ const start = async () => {
 			}?${bundleQuery}`
 		);
 		spinner.text = `Getting map from port ${port}...`;
+		await new Promise(resolve => setTimeout(resolve, 100));
+
 		const sourceMap = await got(
 			`${
 				port === 19001
@@ -69,7 +73,7 @@ const start = async () => {
 			path.join(__dirname, '..', 'bundle.js.map'),
 			{html: true}
 		);
-		writeFileSync('report.html', analysis.html);
+		writeFileSync(path.join(__dirname, '..', 'report.html'), analysis.html);
 		spinner.stop();
 		const endTime = Date.now();
 		open(path.join(__dirname, '..', 'report.html'));
