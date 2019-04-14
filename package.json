@@ -1,12 +1,12 @@
 {
   "name": "visualize-bundle",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.5",
   "description": "Visualize React Native bundle",
-  "main": "dist/commonjs/index.js",
-  "bin": "dist/commonjs/index.js",
+  "main": "dist/index.js",
+  "bin": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist",
-    "prepare": "bob build && echo \"#! /usr/bin/env node\" | cat - dist/commonjs/index.js > /tmp/out && mv /tmp/out dist/commonjs/index.js"
+    "prepare": "bob build && echo \"#! /usr/bin/env node\" | cat - dist/index.js > /tmp/out && mv /tmp/out dist/index.js"
   },
   "author": "Jonny Burger",
   "license": "MIT",
