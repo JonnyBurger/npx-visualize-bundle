@@ -16,7 +16,7 @@ const choices = [
 ];
 
 const start = async () => {
-	console.log('');
+	console.log(' ');
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
 		isRnRunning()
@@ -76,14 +76,14 @@ const start = async () => {
 		writeFileSync(path.join(__dirname, '..', 'report.html'), analysis.html);
 		spinner.stop();
 		const endTime = Date.now();
-		open(path.join(__dirname, '..', 'report.html'));
-		console.log('');
+		await open(path.join(__dirname, '..', 'report.html'));
+		console.log(' ');
 		console.log(
 			`❇️  Report generated in ${Math.floor(
 				(endTime - startTime) / 1000
 			)}s and opened in browser.`
 		);
-		console.log('');
+		console.log(' ');
 		unlink(path.join(__dirname, '..', 'bundle.js'), () => {
 			unlink(path.join(__dirname, '..', 'bundle.js.map'), () => {
 				process.exit(0);
