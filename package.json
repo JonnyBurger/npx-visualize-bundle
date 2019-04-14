@@ -2,9 +2,10 @@
   "name": "visualize-bundle",
   "version": "1.0.0",
   "description": "Visualize React Native bundle",
-  "main": "index.js",
+  "main": "dist/commonjs/index.js",
   "scripts": {
-    "start": "tsc && node dist"
+    "start": "tsc && node dist",
+    "prepare": "bob build"
   },
   "author": "Jonny Burger",
   "license": "MIT",
@@ -24,5 +25,21 @@
     "@types/qs": "^6.5.3",
     "ts-node": "^8.0.3",
     "typescript": "^3.4.3"
+  },
+  "react-native": "src/index.ts",
+  "module": "dist/module/index.js",
+  "types": "dist/typescript/src/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }
