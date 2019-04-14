@@ -1,8 +1,9 @@
 {
   "name": "visualize-bundle",
-  "version": "1.0.0",
+  "version": "0.1.0-alpha",
   "description": "Visualize React Native bundle",
   "main": "dist/commonjs/index.js",
+  "bin": "dist/commonjs/index.js",
   "scripts": {
     "start": "tsc && node dist",
     "prepare": "bob build"
