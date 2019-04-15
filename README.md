@@ -1,9 +1,13 @@
 <p>
-    <h2 align="center"><code><span style="color: #72C834">npx</span> visualize-bundle</code></h2>
+    <h3 align="center"><code><span style="color: #72C834">npx</span> visualize-bundle</code></h3>
 </p>
 <p align="center">
 <img src="npx-visualize-bundle.gif"/>
 </p>
+<p> </p>
+<p> </p>
+
+
 
 `npx visualize-bundle` allows you to inspect your React Native bundle in just one command and to diagnose big modules.
 
@@ -13,13 +17,13 @@ This package simply downloads the bundle and the sourcemap from the running pack
 
 ## Usage
 
-No installation is needed, just call
+No installation is needed, just type
 
 ```sh
 npx visualize-bundle
 ```
 
-from the command line. The `npx` command is available with npm 5.2 or later.
+into the command line. The `npx` command is available with npm 5.2 or later.
 
 By default the iOS production bundle is being analyzed.
 The following options are available:
