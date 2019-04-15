@@ -53,7 +53,12 @@ const start = async () => {
 				port === 19001
 					? 'http://localhost:19001/node_modules/expo/AppEntry.bundle'
 					: 'http://localhost:8081/index.ios.bundle'
-			}?${bundleQuery}`
+			}?${bundleQuery}`,
+			{
+				headers: {
+					'user-agent': 'npx-visualize-bundle'
+				}
+			}
 		);
 		spinner.text = `Getting map from port ${port}...`;
 		await new Promise(resolve => setTimeout(resolve, 100));
@@ -63,7 +68,12 @@ const start = async () => {
 				port === 19001
 					? 'http://localhost:19001/node_modules/expo/AppEntry.map'
 					: 'http://localhost:8081/index.ios.map'
-			}?${sourceMapQuery}`
+			}?${sourceMapQuery}`,
+			{
+				headers: {
+					'user-agent': 'npx-visualize-bundle'
+				}
+			}
 		);
 		writeFileSync(path.join(__dirname, '..', 'bundle.js'), bundle.body);
 		writeFileSync(path.join(__dirname, '..', 'bundle.js.map'), sourceMap.body);
