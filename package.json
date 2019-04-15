@@ -1,6 +1,6 @@
 {
   "name": "visualize-bundle",
-  "version": "0.1.0-alpha.7",
+  "version": "1.0.0-alpha.0",
   "description": "Visualize React Native bundle",
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -11,6 +11,8 @@
   "author": "Jonny Burger",
   "license": "MIT",
   "dependencies": {
+    "@types/commander": "^2.12.2",
+    "commander": "^2.20.0",
     "got": "^9.6.0",
     "inquirer": "^6.3.1",
     "open": "^6.1.0",

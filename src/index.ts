@@ -1,14 +1,30 @@
 import got from 'got';
+import commander from 'commander';
 import {writeFileSync, unlink} from 'fs';
+import qs from 'qs';
 import open from 'open';
 import path from 'path';
 import ora from 'ora';
 import inquirer from 'inquirer';
-import {sourceMapQuery, bundleQuery} from './packager-url';
 import isExpoRunning from './is-expo-running';
 import isRnRunning from './is-rn-running';
+const packageJson = require('../package.json');
+
+commander
+	.version(packageJson.version, '-v, --version')
+	.option('-a, --android', 'Analyse Android bundle ')
+	.option('-d, --dev', 'Analyse developement bundle')
+	.parse(process.argv);
 
 const sourceMapExplorer = require('source-map-explorer');
+
+const query = qs.stringify({
+	platform: commander.android ? 'android' : 'ios',
+	sourceMap: 'true',
+	dev: commander.dev ? 'true' : 'false',
+	minify: 'false',
+	hot: 'false'
+});
 
 const choices = [
 	'React Native project running on port 8081',
@@ -34,6 +50,7 @@ const start = async () => {
 	}
 
 	if (expoRunning && rnRunning) {
+		console.log('Multiple found.');
 		const prompt = inquirer.createPromptModule();
 		const {project} = await prompt([
 			{
@@ -66,7 +83,7 @@ const start = async () => {
 				port === 19001
 					? 'http://localhost:19001/node_modules/expo/AppEntry.bundle'
 					: 'http://localhost:8081/index.ios.bundle'
-			}?${bundleQuery}`,
+			}?${query}`,
 			{
 				headers: {
 					'user-agent': 'npx-visualize-bundle'
@@ -81,7 +98,7 @@ const start = async () => {
 				port === 19001
 					? 'http://localhost:19001/node_modules/expo/AppEntry.map'
 					: 'http://localhost:8081/index.ios.map'
-			}?${sourceMapQuery}`,
+			}?${query}`,
 			{
 				headers: {
 					'user-agent': 'npx-visualize-bundle'
