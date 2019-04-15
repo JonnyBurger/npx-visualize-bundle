@@ -6,7 +6,7 @@
   "bin": "dist/index.js",
   "scripts": {
     "start": "tsc && node dist",
-    "prepare": "bob build && tsc && echo \"#! /usr/bin/env node\" | cat - dist/index.js > /tmp/out && mv /tmp/out dist/index.js"
+    "prepare": "tsc && echo \"#! /usr/bin/env node\" | cat - dist/index.js > /tmp/out && mv /tmp/out dist/index.js"
   },
   "author": "Jonny Burger",
   "license": "MIT",
@@ -19,7 +19,6 @@
     "source-map-explorer": "^1.8.0"
   },
   "devDependencies": {
-    "@react-native-community/bob": "^0.3.4",
     "@types/got": "^9.4.1",
     "@types/inquirer": "^6.0.0",
     "@types/open": "^6.1.0",
@@ -27,19 +26,7 @@
     "ts-node": "^8.0.3",
     "typescript": "^3.4.3"
   },
-  "react-native": "src/index.ts",
-  "module": "dist/module/index.js",
-  "types": "dist/typescript/src/index.d.ts",
   "files": [
     "dist"
-  ],
-  "@react-native-community/bob": {
-    "source": "src",
-    "output": "dist",
-    "targets": [
-      "commonjs",
-      "module",
-      "typescript"
-    ]
-  }
+  ]
 }
