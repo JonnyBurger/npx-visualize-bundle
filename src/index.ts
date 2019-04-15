@@ -17,11 +17,22 @@ const choices = [
 
 const start = async () => {
 	console.log(' ');
+	process.stdout.write('Searching for running React Native app... ');
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
 		isRnRunning()
 	]);
 	let port = expoRunning ? 19001 : 8081;
+
+	if (expoRunning && !rnRunning) {
+		console.log('Found Expo app.');
+		console.log('');
+	}
+	if (!expoRunning && rnRunning) {
+		console.log('Found React Native app.');
+		console.log('');
+	}
+
 	if (expoRunning && rnRunning) {
 		const prompt = inquirer.createPromptModule();
 		const {project} = await prompt([
@@ -36,10 +47,12 @@ const start = async () => {
 		port = project === choices[0] ? 8081 : 19001;
 	}
 	if (!expoRunning && !rnRunning) {
+		console.log('None found.');
 		console.log(
 			`Could not find a React Native or Expo project running on port ${8081} or ${19001}. Start one and run 'npx visualize-bundle' again.`
 		);
-		process.exit(1);
+		console.log('');
+		process.exit(0);
 	}
 	const startTime = Date.now();
 
@@ -78,6 +91,8 @@ const start = async () => {
 		writeFileSync(path.join(__dirname, '..', 'bundle.js'), bundle.body);
 		writeFileSync(path.join(__dirname, '..', 'bundle.js.map'), sourceMap.body);
 		spinner.text = 'Analysing bundle using source-map-explorer...';
+		await new Promise(resolve => setTimeout(resolve, 100));
+
 		const analysis = sourceMapExplorer(
 			path.join(__dirname, '..', 'bundle.js'),
 			path.join(__dirname, '..', 'bundle.js.map'),
