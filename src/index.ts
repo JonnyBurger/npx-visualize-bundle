@@ -132,8 +132,19 @@ const start = async () => {
 			});
 		});
 	} catch (err) {
-		console.log('Could not do bundle analysis: ' + err.message);
-		console.log(err.stack);
+		console.log('');
+		if (err.message.match(/500/)) {
+			console.log(
+				[
+					'The packager returned status code 500.',
+					'Your code might have an error that will prevent it from compilation.',
+					'Check the output of the packager.'
+				].join('\n')
+			);
+		} else {
+			console.log('Could not do bundle analysis: ' + err.message);
+			console.log(err.stack);
+		}
 		spinner.stop();
 		process.exit(1);
 	}
