@@ -4,6 +4,8 @@
   "description": "Visualize React Native bundle",
   "main": "dist/index.js",
   "bin": "dist/index.js",
+  "keywords": ["react-native", "expo", "sourcemaps", "bundle-size"],
+  "repository": "JonnyBurger/npx-visualize-bundle",
   "scripts": {
     "start": "tsc && node dist",
     "prepare": "tsc && echo \"#! /usr/bin/env node\" | cat - dist/index.js > /tmp/out && mv /tmp/out dist/index.js"

@@ -45,9 +45,7 @@ MIT
 ---
 
 <p align="center">
-<p align="center">
-<a href="https://github.com/JonnyBurger/npx-visualize-bundle/raw/master/credit.png">
-<img src="https://twitter.com/JNYBGR" height="28"/>
-</a>
-</p>
+    <a href="https://twitter.com/JNYBGR">
+        <img src="https://github.com/JonnyBurger/npx-visualize-bundle/raw/master/credit.png" height="28"/>
+    </a>
 </p>
