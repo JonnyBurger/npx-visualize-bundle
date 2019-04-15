@@ -1,6 +1,6 @@
 {
   "name": "visualize-bundle",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Visualize React Native bundle",
   "main": "dist/index.js",
   "bin": "dist/index.js",
