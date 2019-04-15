@@ -29,8 +29,6 @@
     "typescript": "^3.4.3"
   },
   "files": [
-    "dist",
-    "credit.png",
-    "npx-visualize-bundle.gif"
+    "dist"
   ]
 }

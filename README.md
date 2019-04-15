@@ -2,7 +2,7 @@
     <h3 align="center"><code><span style="color: #72C834">npx</span> visualize-bundle</code></h3>
 </p>
 <p align="center">
-<img src="npx-visualize-bundle.gif"/>
+<img src="https://github.com/JonnyBurger/npx-visualize-bundle/raw/master/npx-visualize-bundle.gif"/>
 </p>
 <p> </p>
 <p> </p>
@@ -47,7 +47,7 @@ MIT
 <p align="center">
 <p align="center">
 <a href="https://twitter.com/JNYBGR">
-<img src="credit.png" height="28"/>
+<img src="https://twitter.com/JNYBGR" height="28"/>
 </a>
 </p>
 </p>
