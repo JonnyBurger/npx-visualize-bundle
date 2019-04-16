@@ -14,6 +14,7 @@ commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse developement bundle')
+	.option('-j, --json', 'Output JSON')
 	.option('-o, --output [path]', 'Specify output path', path.join(__dirname, '..'))
 	.parse(process.argv);
 
@@ -118,6 +119,9 @@ const start = async () => {
 			{html: true}
 		);
 		writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
+		if (commander.json) {
+			writeFileSync(path.join(outputDir, 'report.json'), JSON.stringify({...analysis, html: undefined}, null, 2));
+		}
 		spinner.stop();
 		const endTime = Date.now();
 		await open(path.join(outputDir, 'report.html'));
