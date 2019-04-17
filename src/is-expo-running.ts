@@ -1,12 +1,8 @@
-import got from 'got';
+import getResource from './request-resource';
 
 export default async (): Promise<boolean> => {
 	try {
-		await got('http://localhost:19001', {
-			headers: {
-				'user-agent': 'npx-visualize-bundle'
-			}
-		});
+		await getResource('http://localhost:19001');
 		return true;
 	} catch (err) {
 		return false;

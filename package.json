@@ -4,7 +4,12 @@
   "description": "Visualize React Native bundle",
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "keywords": ["react-native", "expo", "sourcemaps", "bundle-size"],
+  "keywords": [
+    "react-native",
+    "expo",
+    "sourcemaps",
+    "bundle-size"
+  ],
   "repository": "JonnyBurger/npx-visualize-bundle",
   "scripts": {
     "start": "tsc && node dist",
@@ -19,6 +24,7 @@
     "inquirer": "^6.3.1",
     "open": "^6.1.0",
     "ora": "^3.4.0",
+    "p-any": "^2.1.0",
     "qs": "^6.7.0",
     "source-map-explorer": "^1.8.0"
   },

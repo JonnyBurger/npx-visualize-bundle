@@ -1,4 +1,3 @@
-import got from 'got';
 import commander from 'commander';
 import {writeFileSync, unlink} from 'fs';
 import qs from 'qs';
@@ -8,6 +7,7 @@ import ora from 'ora';
 import inquirer from 'inquirer';
 import isExpoRunning from './is-expo-running';
 import isRnRunning from './is-rn-running';
+import {getAnyResource} from './request-resource';
 const packageJson = require('../package.json');
 
 commander
@@ -80,32 +80,23 @@ const start = async () => {
 	spinner.text = `Getting bundle from port ${port}...`;
 	await new Promise(resolve => setTimeout(resolve, 100));
 	try {
-		const bundle = await got(
-			`${
-				port === 19001
-					? 'http://localhost:19001/node_modules/expo/AppEntry.bundle'
-					: 'http://localhost:8081/index.ios.bundle'
-			}?${query}`,
-			{
-				headers: {
-					'user-agent': 'npx-visualize-bundle'
-				}
-			}
+		const bundle = await getAnyResource(
+			port === 19001
+				? [`http://localhost:19001/node_modules/expo/AppEntry.bundle?${query}`]
+				: [
+						`http://localhost:8081/index.bundle?${query}`,
+						`http://localhost:8081/index.${platform}.bundle?${query}`
+				  ]
 		);
 		spinner.text = `Getting map from port ${port}...`;
 		await new Promise(resolve => setTimeout(resolve, 100));
-
-		const sourceMap = await got(
-			`${
-				port === 19001
-					? 'http://localhost:19001/node_modules/expo/AppEntry.map'
-					: 'http://localhost:8081/index.ios.map'
-			}?${query}`,
-			{
-				headers: {
-					'user-agent': 'npx-visualize-bundle'
-				}
-			}
+		const sourceMap = await getAnyResource(
+			port === 19001
+				? [`http://localhost:19001/node_modules/expo/AppEntry.map?${query}`]
+				: [
+						`http://localhost:8081/index.map?${query}`,
+						`http://localhost:8081/index.${platform}.map?${query}`
+				  ]
 		);
 		const outputDir = path.resolve(commander.output);
 		writeFileSync(path.join(outputDir, 'bundle.js'), bundle.body);
