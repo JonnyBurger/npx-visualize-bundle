@@ -16,8 +16,8 @@ commander
 	.option('-d, --dev', 'Analyse developement bundle')
 	.option('-j, --json', 'Output JSON')
 	.option(
-		'-o, --output [path]',
-		'Specify output path',
+		'-o, --output [dir]',
+		'Specify output dir',
 		path.join(__dirname, '..')
 	)
 	.parse(process.argv);
