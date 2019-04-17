@@ -14,6 +14,7 @@ commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse developement bundle')
+	.option('-o, --output [path]', 'Specify output path', path.join(__dirname, '..'))
 	.parse(process.argv);
 
 const sourceMapExplorer = require('source-map-explorer');
@@ -105,20 +106,21 @@ const start = async () => {
 				}
 			}
 		);
-		writeFileSync(path.join(__dirname, '..', 'bundle.js'), bundle.body);
-		writeFileSync(path.join(__dirname, '..', 'bundle.js.map'), sourceMap.body);
+		const outputDir = path.resolve(commander.output);
+		writeFileSync(path.join(outputDir, 'bundle.js'), bundle.body);
+		writeFileSync(path.join(outputDir, 'bundle.js.map'), sourceMap.body);
 		spinner.text = 'Analysing bundle using source-map-explorer...';
 		await new Promise(resolve => setTimeout(resolve, 100));
 
 		const analysis = sourceMapExplorer(
-			path.join(__dirname, '..', 'bundle.js'),
-			path.join(__dirname, '..', 'bundle.js.map'),
+			path.join(outputDir, 'bundle.js'),
+			path.join(outputDir, 'bundle.js.map'),
 			{html: true}
 		);
-		writeFileSync(path.join(__dirname, '..', 'report.html'), analysis.html);
+		writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
 		spinner.stop();
 		const endTime = Date.now();
-		await open(path.join(__dirname, '..', 'report.html'));
+		await open(path.join(outputDir, 'report.html'));
 		console.log(' ');
 		console.log(
 			`❇️  Report generated in ${Math.floor(
@@ -126,8 +128,8 @@ const start = async () => {
 			)}s and opened in browser.`
 		);
 		console.log(' ');
-		unlink(path.join(__dirname, '..', 'bundle.js'), () => {
-			unlink(path.join(__dirname, '..', 'bundle.js.map'), () => {
+		unlink(path.join(outputDir, 'bundle.js'), () => {
+			unlink(path.join(outputDir, 'bundle.js.map'), () => {
 				process.exit(0);
 			});
 		});
