@@ -26,13 +26,15 @@
     "ora": "^3.4.0",
     "p-any": "^2.1.0",
     "qs": "^6.7.0",
-    "source-map-explorer": "^1.8.0"
+    "source-map-explorer": "^1.8.0",
+    "temp-dir": "^1.0.0"
   },
   "devDependencies": {
     "@types/got": "^9.4.1",
     "@types/inquirer": "^6.0.0",
     "@types/open": "^6.1.0",
     "@types/qs": "^6.5.3",
+    "@types/temp-dir": "^1.0.0",
     "ts-node": "^8.0.3",
     "typescript": "^3.4.3"
   },

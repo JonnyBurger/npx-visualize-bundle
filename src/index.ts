@@ -1,25 +1,24 @@
 import commander from 'commander';
-import {writeFileSync, unlink} from 'fs';
+import {writeFileSync, unlink, mkdtempSync} from 'fs';
 import qs from 'qs';
 import open from 'open';
 import path from 'path';
 import ora from 'ora';
 import inquirer from 'inquirer';
+import tempDir from 'temp-dir';
 import isExpoRunning from './is-expo-running';
 import isRnRunning from './is-rn-running';
 import {getAnyResource} from './request-resource';
 const packageJson = require('../package.json');
+
+const defaultDir = mkdtempSync(path.join(tempDir, 'npx-visualize-bundle'));
 
 commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse developement bundle')
 	.option('-j, --json', 'Output JSON')
-	.option(
-		'-o, --output [dir]',
-		'Specify output dir',
-		path.join(__dirname, '..')
-	)
+	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
 	.parse(process.argv);
 
 const sourceMapExplorer = require('source-map-explorer');
@@ -124,7 +123,7 @@ const start = async () => {
 			console.log('');
 			console.log('');
 			console.log(
-				`❇️ Written report as JSON to ${path.join(outputDir, 'report.json')}`
+				`❇️  Written report as JSON to ${path.join(outputDir, 'report.json')}`
 			);
 		} else {
 			writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
