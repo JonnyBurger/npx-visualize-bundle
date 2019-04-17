@@ -15,13 +15,19 @@ commander
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse developement bundle')
 	.option('-j, --json', 'Output JSON')
-	.option('-o, --output [path]', 'Specify output path', path.join(__dirname, '..'))
+	.option(
+		'-o, --output [path]',
+		'Specify output path',
+		path.join(__dirname, '..')
+	)
 	.parse(process.argv);
 
 const sourceMapExplorer = require('source-map-explorer');
 
+const platform = commander.android ? 'android' : 'ios';
+
 const query = qs.stringify({
-	platform: commander.android ? 'android' : 'ios',
+	platform,
 	sourceMap: 'true',
 	dev: commander.dev ? 'true' : 'false',
 	minify: 'false',
@@ -107,22 +113,31 @@ const start = async () => {
 		const analysis = sourceMapExplorer(
 			path.join(outputDir, 'bundle.js'),
 			path.join(outputDir, 'bundle.js.map'),
-			{html: true}
+			{html: !commander.json}
 		);
-		writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
-		if (commander.json) {
-			writeFileSync(path.join(outputDir, 'report.json'), JSON.stringify({...analysis, html: undefined}, null, 2));
-		}
 		spinner.stop();
-		const endTime = Date.now();
-		await open(path.join(outputDir, 'report.html'));
-		console.log(' ');
-		console.log(
-			`❇️  Report generated in ${Math.floor(
-				(endTime - startTime) / 1000
-			)}s and opened in browser.`
-		);
-		console.log(' ');
+		if (commander.json) {
+			writeFileSync(
+				path.join(outputDir, 'report.json'),
+				JSON.stringify({...analysis}, null, 2)
+			);
+			console.log('');
+			console.log('');
+			console.log(
+				`❇️ Written report as JSON to ${path.join(outputDir, 'report.json')}`
+			);
+		} else {
+			writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
+			const endTime = Date.now();
+			await open(path.join(outputDir, 'report.html'));
+			console.log(' ');
+			console.log(
+				`❇️  Report generated in ${Math.floor(
+					(endTime - startTime) / 1000
+				)}s and opened in browser.`
+			);
+			console.log(' ');
+		}
 		unlink(path.join(outputDir, 'bundle.js'), () => {
 			unlink(path.join(outputDir, 'bundle.js.map'), () => {
 				process.exit(0);
