@@ -29,10 +29,12 @@ By default the iOS production bundle is being analyzed.
 The following options are available:
 
 ```
--a, --android  analyse Android bundle 
--d, --dev      analyse developement bundle
--v, --version  output the version number
--h, --help     output usage information
+-a, --android         analyse Android bundle 
+-d, --dev             analyse developement bundle
+-o, --output [path]   output directory
+-j, --json            save output as JSON file instead of HTML
+-v, --version         print the version number
+-h, --help            print usage information
 ```
 
 ## Development
