@@ -19,6 +19,7 @@ commander
 	.option('-d, --dev', 'Analyse developement bundle')
 	.option('-j, --json', 'Output JSON')
 	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
+	.option('-p, --port [port]', 'Specify js package port')
 	.parse(process.argv);
 
 const sourceMapExplorer = require('source-map-explorer');
@@ -45,7 +46,7 @@ const start = async () => {
 		isExpoRunning(),
 		isRnRunning()
 	]);
-	let port = expoRunning ? 19001 : 8081;
+	let port = commander.port || (expoRunning ? 19001 : 8081);
 
 	if (expoRunning && !rnRunning) {
 		console.log('Found Expo app.');
@@ -89,8 +90,8 @@ const start = async () => {
 			port === 19001
 				? [`http://localhost:19001/node_modules/expo/AppEntry.bundle?${query}`]
 				: [
-						`http://localhost:8081/index.bundle?${query}`,
-						`http://localhost:8081/index.${platform}.bundle?${query}`
+					`http://localhost:${port}/index.bundle?${query}`,
+					`http://localhost:${port}/index.${platform}.bundle?${query}`
 				  ]
 		);
 		spinner.text = `Getting map from port ${port}...`;
@@ -99,8 +100,8 @@ const start = async () => {
 			port === 19001
 				? [`http://localhost:19001/node_modules/expo/AppEntry.map?${query}`]
 				: [
-						`http://localhost:8081/index.map?${query}`,
-						`http://localhost:8081/index.${platform}.map?${query}`
+					`http://localhost:${port}/index.map?${query}`,
+					`http://localhost:${port}/index.${platform}.map?${query}`
 				  ]
 		);
 		const outputDir = path.resolve(commander.output);
