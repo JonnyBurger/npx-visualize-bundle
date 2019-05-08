@@ -44,7 +44,7 @@ const start = async () => {
 	process.stdout.write('Searching for running React Native app... ');
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
-		isRnRunning()
+		isRnRunning(commander.port || 8081)
 	]);
 	let port = commander.port || (expoRunning ? 19001 : 8081);
 
@@ -57,7 +57,7 @@ const start = async () => {
 		console.log('');
 	}
 
-	if (expoRunning && rnRunning) {
+	if (expoRunning && rnRunning && !commander.port) {
 		console.log('Multiple found.');
 		const prompt = inquirer.createPromptModule();
 		const {project} = await prompt([
@@ -90,8 +90,8 @@ const start = async () => {
 			port === 19001
 				? [`http://localhost:19001/node_modules/expo/AppEntry.bundle?${query}`]
 				: [
-					`http://localhost:${port}/index.bundle?${query}`,
-					`http://localhost:${port}/index.${platform}.bundle?${query}`
+						`http://localhost:${port}/index.bundle?${query}`,
+						`http://localhost:${port}/index.${platform}.bundle?${query}`
 				  ]
 		);
 		spinner.text = `Getting map from port ${port}...`;
@@ -100,8 +100,8 @@ const start = async () => {
 			port === 19001
 				? [`http://localhost:19001/node_modules/expo/AppEntry.map?${query}`]
 				: [
-					`http://localhost:${port}/index.map?${query}`,
-					`http://localhost:${port}/index.${platform}.map?${query}`
+						`http://localhost:${port}/index.map?${query}`,
+						`http://localhost:${port}/index.${platform}.map?${query}`
 				  ]
 		);
 		const outputDir = path.resolve(commander.output);
