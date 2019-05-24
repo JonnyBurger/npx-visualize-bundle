@@ -30,8 +30,7 @@ The following options are available:
 
 ```
 -a, --android         analyse Android bundle 
--d, --dev             analyse developement bundle
--m, --min             analyse minified bundle
+-d, --dev             analyse development bundle
 -o, --output [dir]    output directory
 -p, --port [port]     use custom port
 -j, --json            save output as JSON file instead of HTML

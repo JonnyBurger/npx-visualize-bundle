@@ -16,8 +16,7 @@ const defaultDir = mkdtempSync(path.join(tempDir, 'npx-visualize-bundle'));
 commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
-	.option('-d, --dev', 'Analyse developement bundle')
-	.option('-m, --min', 'Analyse minified bundle')
+	.option('-d, --dev', 'Analyse development bundle')
 	.option('-j, --json', 'Output JSON')
 	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
 	.option('-p, --port [port]', 'Specify js package port')
@@ -30,8 +29,8 @@ const platform = commander.android ? 'android' : 'ios';
 const query = qs.stringify({
 	platform,
 	sourceMap: 'true',
-	dev: commander.dev ? 'true' : 'false',
-	minify: commander.min ? 'false' : 'false',
+	dev: String(Boolean(commander.dev)),
+	minify: String(!commander.dev),
 	hot: 'false'
 });
 
