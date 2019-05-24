@@ -17,6 +17,7 @@ commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse developement bundle')
+	.option('-m, --min', 'Analyse minified bundle')
 	.option('-j, --json', 'Output JSON')
 	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
 	.option('-p, --port [port]', 'Specify js package port')
@@ -30,7 +31,7 @@ const query = qs.stringify({
 	platform,
 	sourceMap: 'true',
 	dev: commander.dev ? 'true' : 'false',
-	minify: 'false',
+	minify: commander.min ? 'false' : 'false',
 	hot: 'false'
 });
 
