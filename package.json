@@ -1,6 +1,6 @@
 {
   "name": "visualize-bundle",
-  "version": "1.2.0",
+  "version": "2.0.0-alpha.0",
   "description": "Visualize React Native bundle",
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -19,6 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/commander": "^2.12.2",
+    "cheerio": "^1.0.0-rc.3",
     "commander": "^2.20.0",
     "got": "^9.6.0",
     "inquirer": "^6.3.1",
@@ -30,6 +31,7 @@
     "temp-dir": "^1.0.0"
   },
   "devDependencies": {
+    "@types/cheerio": "^0.22.11",
     "@types/got": "^9.4.1",
     "@types/inquirer": "^6.0.0",
     "@types/open": "^6.1.0",
