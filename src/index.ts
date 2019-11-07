@@ -9,6 +9,7 @@ import tempDir from 'temp-dir';
 import isExpoRunning from './is-expo-running';
 import isRnRunning from './is-rn-running';
 import {getAnyResource} from './request-resource';
+import fixSourceMapReference from './fix-source-map-reference';
 const packageJson = require('../package.json');
 
 const defaultDir = mkdtempSync(path.join(tempDir, 'npx-visualize-bundle'));
@@ -105,7 +106,10 @@ const start = async () => {
 				  ]
 		);
 		const outputDir = path.resolve(commander.output);
-		writeFileSync(path.join(outputDir, 'bundle.js'), bundle.body);
+		writeFileSync(
+			path.join(outputDir, 'bundle.js'),
+			fixSourceMapReference(bundle.body, 'bundle')
+		);
 		writeFileSync(path.join(outputDir, 'bundle.js.map'), sourceMap.body);
 		spinner.text = 'Analysing bundle using source-map-explorer...';
 		await new Promise(resolve => setTimeout(resolve, 100));
