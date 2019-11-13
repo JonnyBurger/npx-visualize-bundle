@@ -1,5 +1,6 @@
 import commander from 'commander';
-import {writeFileSync, unlink, mkdtempSync} from 'fs';
+import {promisify} from 'util';
+import {writeFileSync, unlink, mkdtempSync, mkdir} from 'fs';
 import qs from 'qs';
 import open from 'open';
 import path from 'path';
@@ -11,13 +12,17 @@ import isRnRunning from './is-rn-running';
 import {getAnyResource} from './request-resource';
 const packageJson = require('../package.json');
 
+const mkdirAsync = promisify(mkdir);
 const defaultDir = mkdtempSync(path.join(tempDir, 'npx-visualize-bundle'));
+const defaultReportName = 'report';
 
 commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse development bundle')
 	.option('-j, --json', 'Output JSON')
+	.option('-r, --report [type]', 'Name of report', defaultReportName)
+	.option('-k, --keep', 'Keep bundle file and map', false)
 	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
 	.option('-p, --port [port]', 'Specify js package port')
 	.parse(process.argv);
@@ -41,6 +46,7 @@ const choices = [
 
 const start = async () => {
 	console.log(' ');
+
 	process.stdout.write('Searching for running React Native app... ');
 	const [expoRunning, rnRunning] = await Promise.all([
 		isExpoRunning(),
@@ -105,6 +111,7 @@ const start = async () => {
 				  ]
 		);
 		const outputDir = path.resolve(commander.output);
+		await mkdirAsync(outputDir, {recursive: true}).catch(_ => {});
 		writeFileSync(path.join(outputDir, 'bundle.js'), bundle.body);
 		writeFileSync(path.join(outputDir, 'bundle.js.map'), sourceMap.body);
 		spinner.text = 'Analysing bundle using source-map-explorer...';
@@ -118,18 +125,18 @@ const start = async () => {
 		spinner.stop();
 		if (commander.json) {
 			writeFileSync(
-				path.join(outputDir, 'report.json'),
+				path.join(outputDir, `${commander.report}.json`),
 				JSON.stringify({...analysis}, null, 2)
 			);
 			console.log('');
 			console.log('');
 			console.log(
-				`❇️  Written report as JSON to ${path.join(outputDir, 'report.json')}`
+				`❇️  Written report as JSON to ${path.join(outputDir, `${commander.report}.json`)}`
 			);
 		} else {
-			writeFileSync(path.join(outputDir, 'report.html'), analysis.html);
+			writeFileSync(path.join(outputDir, `${commander.report}.html`), analysis.html);
 			const endTime = Date.now();
-			await open(path.join(outputDir, 'report.html'));
+			await open(path.join(outputDir, `${commander.report}.html`));
 			console.log(' ');
 			console.log(
 				`❇️  Report generated in ${Math.floor(
@@ -138,11 +145,16 @@ const start = async () => {
 			);
 			console.log(' ');
 		}
-		unlink(path.join(outputDir, 'bundle.js'), () => {
-			unlink(path.join(outputDir, 'bundle.js.map'), () => {
-				process.exit(0);
+		
+		if (commander.keep) {
+			process.exit(0);
+		}	 else {
+			unlink(path.join(outputDir, 'bundle.js'), () => {
+				unlink(path.join(outputDir, 'bundle.js.map'), () => {
+					process.exit(0);
+				});
 			});
-		});
+		}
 	} catch (err) {
 		console.log('');
 		if (err.message.match(/500/)) {
