@@ -21,8 +21,8 @@ commander
 	.option('-a, --android', 'Analyse Android bundle ')
 	.option('-d, --dev', 'Analyse development bundle')
 	.option('-j, --json', 'Output JSON')
-	.option('-r, --report [type]', 'Name of report', defaultReportName)
-	.option('-k, --keep', 'Keep bundle file and map', false)
+	.option('-r, --report [string]', 'Custom name for the report file (without ext)', defaultReportName)
+	.option('-k, --keep', 'Don\'t delete JS bundle and source map after execution', false)
 	.option('-o, --output [dir]', 'Specify output dir', defaultDir)
 	.option('-p, --port [port]', 'Specify js package port')
 	.parse(process.argv);
