@@ -33,6 +33,8 @@ The following options are available:
 -d, --dev             analyse development bundle
 -o, --output [dir]    output directory
 -p, --port [port]     use custom port
+-r, --report [string] Custom name for the report file (without ext)
+-k, --keep [string]   Don't delete JS bundle and source map after execution
 -j, --json            save output as JSON file instead of HTML
 -v, --version         print the version number
 -h, --help            print usage information
