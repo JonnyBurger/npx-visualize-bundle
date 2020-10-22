@@ -19,6 +19,7 @@ const defaultReportName = 'report';
 commander
 	.version(packageJson.version, '-v, --version')
 	.option('-a, --android', 'Analyse Android bundle ')
+	.option('-y, --youi', 'Analyse Youi bundle ')
 	.option('-d, --dev', 'Analyse development bundle')
 	.option('-j, --json', 'Output JSON')
 	.option('-r, --report [string]', 'Custom name for the report file (without ext)', defaultReportName)
@@ -29,7 +30,11 @@ commander
 
 const sourceMapExplorer = require('source-map-explorer');
 
-const platform = commander.android ? 'android' : 'ios';
+const platform = commander.android
+	? 'android'
+	: commander.youi
+	? 'youi'
+      	: 'ios';
 
 const query = qs.stringify({
 	platform,
